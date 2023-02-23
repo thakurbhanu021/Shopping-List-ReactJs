@@ -12,12 +12,33 @@ const App = () => {
 	const [handleUserInput, setHadlerUserInput] = useState('');
 
 	const onAddInputHandler = () => {
-		const newItem = {Value: handleUserInput, quantity: 1, isCompleted: false};
-		const newItems = [...items, newItem];
-
-		setItems(newItems);
-		setHadlerUserInput('');
+		if(!handleUserInput){
+			alert('Please enter some value to add')
+		}
+		else {
+			const newItem = {Value: handleUserInput, quantity: 1, isCompleted: false};
+			const newItems = [...items, newItem];
+			setItems(newItems);
+			setHadlerUserInput('');
+		}
 	}
+
+	const onIncreaseQuantity = (index)=> {
+		const newItems = [...items];
+		newItems[index].quantity++;
+		setItems(newItems);
+	} 
+	const onDecreaseQuantity = (index)=> {
+		const newItems = [...items];
+		if(newItems[index].quantity <= 0){
+			alert('Cannot decrease quantity lower than zero')
+		}
+		else {
+			newItems[index].quantity--;
+			setItems(newItems);
+		}
+	
+	} 
 
 	return (
 		<div className='app-background'>
@@ -44,11 +65,11 @@ const App = () => {
 						</div>
 						<div className='quantity'>
 							<button>
-								<FontAwesomeIcon icon={faChevronLeft} />
+								<FontAwesomeIcon icon={faChevronLeft} onClick={()=>{onDecreaseQuantity(index)}}/>
 							</button>
 							<span> {item.quantity} </span>
 							<button>
-								<FontAwesomeIcon icon={faChevronRight} />
+								<FontAwesomeIcon icon={faChevronRight} onClick={()=>{onIncreaseQuantity(index)}} />
 							</button>
 						</div>
 					</div>
