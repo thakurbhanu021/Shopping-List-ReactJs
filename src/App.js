@@ -9,13 +9,22 @@ const App = () => {
 		{Value: 'Item 2', quantity: 2 , isCompleted: false},
 		{Value: 'Item 3', quantity: 3 , isCompleted: false},
 	]);
+	const [handleUserInput, setHadlerUserInput] = useState('');
+
+	const onAddInputHandler = () => {
+		const newItem = {Value: handleUserInput, quantity: 1, isCompleted: false};
+		const newItems = [...items, newItem];
+
+		setItems(newItems);
+		setHadlerUserInput('');
+	}
 
 	return (
 		<div className='app-background'>
 			<div className='main-container'>
 				<div className='add-item-box'>
-					<input className='add-item-input' placeholder='Add an item...' />
-					<FontAwesomeIcon icon={faPlus} />
+					<input value={handleUserInput} onChange={(event)=>{setHadlerUserInput(event.target.value)}} className='add-item-input' placeholder='Add an item...' />
+					<FontAwesomeIcon icon={faPlus} onClick={onAddInputHandler}/>
 				</div>
 				<div className='item-list'>
 					{items.map((item , index)=> (
