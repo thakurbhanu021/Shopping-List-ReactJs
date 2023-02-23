@@ -10,6 +10,7 @@ const App = () => {
 		{Value: 'Item 3', quantity: 3 , isCompleted: false},
 	]);
 	const [handleUserInput, setHadlerUserInput] = useState('');
+	const [totalItemCount , setTotalItemCount] = useState(6);
 
 	const onAddInputHandler = () => {
 		if(!handleUserInput){
@@ -20,6 +21,7 @@ const App = () => {
 			const newItems = [...items, newItem];
 			setItems(newItems);
 			setHadlerUserInput('');
+			totalCountHandler();
 		}
 	}
 
@@ -27,7 +29,9 @@ const App = () => {
 		const newItems = [...items];
 		newItems[index].quantity++;
 		setItems(newItems);
+		totalCountHandler();
 	} 
+
 	const onDecreaseQuantity = (index)=> {
 		const newItems = [...items];
 		if(newItems[index].quantity <= 0){
@@ -36,9 +40,23 @@ const App = () => {
 		else {
 			newItems[index].quantity--;
 			setItems(newItems);
+			totalCountHandler();
 		}
-	
 	} 
+
+	const toggleHandler = (index) => {
+		const newItems = [...items];
+		newItems[index].isCompleted = !newItems[index].isCompleted;
+
+		setItems(newItems);
+	}
+
+	const totalCountHandler = () => {
+		const totalCount = items.reduce((total , item)=>{
+			return total + item.quantity;
+		}, 0)
+		setTotalItemCount(totalCount);
+	}
 
 	return (
 		<div className='app-background'>
@@ -50,8 +68,8 @@ const App = () => {
 				<div className='item-list'>
 					{items.map((item , index)=> (
 						<div className='item-container'>
-						<div className='item-name'>
-							{false ? (
+						<div className='item-name' onClick={()=>toggleHandler(index)}>
+							{item.isCompleted ? (
 								<>
 									<FontAwesomeIcon icon={faCheckCircle} />
 									<span className='completed'>{item.Value}</span>
@@ -75,7 +93,7 @@ const App = () => {
 					</div>
 					))}				
 				</div>
-				<div className='total'>Total: 6</div>
+				<div className='total'>Total: {totalItemCount}</div>
 			</div>
 		</div>
 	);
