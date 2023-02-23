@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faCircle, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useState([
+		{Value: 'Item 1', quantity: 1 , isCompleted: false},
+		{Value: 'Item 2', quantity: 2 , isCompleted: false},
+		{Value: 'Item 3', quantity: 3 , isCompleted: false},
+	]);
 
 	return (
 		<div className='app-background'>
@@ -14,17 +18,18 @@ const App = () => {
 					<FontAwesomeIcon icon={faPlus} />
 				</div>
 				<div className='item-list'>
-					<div className='item-container'>
+					{items.map((item , index)=> (
+						<div className='item-container'>
 						<div className='item-name'>
 							{false ? (
 								<>
 									<FontAwesomeIcon icon={faCheckCircle} />
-									<span className='completed'>Item 1</span>
+									<span className='completed'>{item.Value}</span>
 								</>
 							) : (
 								<>
 									<FontAwesomeIcon icon={faCircle} />
-									<span>Item 1</span>
+									<span>{item.Value}</span>
 								</>
 							)}
 						</div>
@@ -32,12 +37,13 @@ const App = () => {
 							<button>
 								<FontAwesomeIcon icon={faChevronLeft} />
 							</button>
-							<span> 1 </span>
+							<span> {item.quantity} </span>
 							<button>
 								<FontAwesomeIcon icon={faChevronRight} />
 							</button>
 						</div>
 					</div>
+					))}				
 				</div>
 				<div className='total'>Total: 6</div>
 			</div>
