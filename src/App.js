@@ -21,7 +21,6 @@ const App = () => {
 			const newItems = [...items, newItem];
 			setItems(newItems);
 			setHadlerUserInput('');
-			totalCountHandler();
 		}
 	}
 
